@@ -1,31 +1,22 @@
-#!/usr/bin/env php
 <?php
 
 require_once('client.php');
 require_once('config.php');
 
-
-class APIError extends Exception {}
-
-
-class Client {
+class Abraia {
     var $url = '';
     var $params = array();
-    var $resp = '';
 
     function files() {
         $url = API_URL.'/images';
-        $resp = session_get($url);
+        $resp = list_files($url);
         return $resp;
     }
 
     function from_file($filename) {
         $url = API_URL.'/images';
-        list($status, $resp) = upload_file($url, $filename);
-        if ($status != 201)
-            throw new APIError('POST ' . $url . ' ' . $status);
-        $json = json_decode($resp, true);
-        $this->url = $url.'/'.$json['filename'];
+        $data = upload_file($url, $filename);
+        $this->url = $url.'/'.$data['filename'];
         $this->params['q'] = 'auto';
         return $this;
     }
@@ -39,11 +30,9 @@ class Client {
 
     function to_file($filename) {
         $url = $this->url.'?'.http_build_query($this->params);
-        list($status, $resp) = download_file($url, $filename);
-        if ($status != 200)
-            throw new APIError('GET ' . $url . ' ' . $status);
+        $data = download_file($url, $filename);
         $fp = fopen($filename, 'w');
-        fwrite($fp, $resp);
+        fwrite($fp, $data);
         fclose($fp);
         return $this;
     }
@@ -56,7 +45,7 @@ class Client {
 
     function delete($filename) {
         $url = API_URL.'/images/'.$filename;
-        $resp = session_delete($url);
+        $resp = remove_file($url);
         return $resp;
     }
 }

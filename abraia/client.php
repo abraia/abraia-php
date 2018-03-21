@@ -1,6 +1,8 @@
 <?php
 
-function session_get($url) {
+class APIError extends Exception {}
+
+function list_files($url) {
     $curl = curl_init($url);
     curl_setopt($curl, CURLOPT_USERPWD, API_KEY.':'.API_SECRET);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -9,10 +11,10 @@ function session_get($url) {
     curl_close($curl);
     if ($statusCode != 200)
         throw new APIError('GET ' . $url . ' ' . $statusCode);
-    return $resp;
+    return json_decode($resp, true);
 }
 
-function session_delete($url) {
+function remove_file($url) {
     $curl = curl_init($url);
     curl_setopt($curl, CURLOPT_USERPWD, API_KEY.':'.API_SECRET);
     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
@@ -22,7 +24,7 @@ function session_delete($url) {
     curl_close($curl);
     if ($statusCode != 200)
         throw new APIError('DELETE ' . $url . ' ' . $statusCode);
-    return $resp;
+    return json_decode($resp, true);
 }
 
 function upload_file($url, $filename) {
@@ -37,7 +39,9 @@ function upload_file($url, $filename) {
     $resp = curl_exec($curl);
     $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
     curl_close($curl);
-    return array($statusCode, $resp);
+    if ($statusCode != 201)
+        throw new APIError('POST ' . $url . ' ' . $statusCode);
+    return json_decode($resp, true);
 }
 
 function download_file($url, $filename) {
@@ -49,5 +53,7 @@ function download_file($url, $filename) {
     $resp = curl_exec($curl);
     $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
     curl_close ($curl);
-    return array($statusCode, $resp);
+    if ($statusCode != 200)
+        throw new APIError('GET ' . $url . ' ' . $statusCode);
+    return $resp;
 }
