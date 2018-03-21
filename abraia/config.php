@@ -22,9 +22,9 @@ function load_auth() {
     return array($config['abraia_api_key'], $config['abraia_api_secret']);
 }
 
-$keys = load_auth();
+list($api_key, $api_secret) = load_auth();
 
-define('API_KEY', $keys[0]);
-define('API_SECRET', $keys[1]);
+define('API_KEY', $api_key);
+define('API_SECRET', $api_secret);
 
 ?>
