@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit colors="true">
-    <testsuites>
-        <testsuite name="Abraia Test Suite">
-            <directory>./tests/</directory>
-        </testsuite>
-    </testsuites>
+<phpunit
+  bootstrap="vendor/autoload.php"
+  stopOnFailure="true"
+  colors="true"
+  verbose="true">
+  <testsuites>
+    <testsuite name="Abraia Test Suite">
+      <directory>tests</directory>
+    </testsuite>
+  </testsuites>
 </phpunit>
