@@ -7,14 +7,20 @@ require_once('Client.php');
 class Abraia extends Client {
     protected $path;
     protected $params;
+    protected $userid;
 
-    function files() {
-        return $this->listFiles();
+    function __construct() {
+        parent::__construct();
+        $this->userid = $this->check();
+    }
+
+    function files($path='') {
+        return $this->listFiles($path);
     }
 
     function fromFile($path) {
-        $data = $this->uploadFile($path);
-        $this->path = $data['filename'];
+        $resp = $this->uploadFile($path, $this->userid . '/');
+        $this->path = $resp['source'];
         $this->params = array('q' => 'auto');
         return $this;
     }
@@ -29,7 +35,7 @@ class Abraia extends Client {
     }
 
     function toFile($path) {
-        $data = $this->downloadFile($this->path, $this->params);
+        $data = $this->transformImage($this->path, $this->params);
         $fp = fopen($path, 'w');
         fwrite($fp, $data);
         fclose($fp);

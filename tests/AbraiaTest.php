@@ -5,39 +5,39 @@ require_once(dirname(__DIR__).'/abraia/Abraia.php');
 $abraia = new Abraia\Abraia();
 
 final class AbraiaTest extends \PHPUnit_Framework_TestCase {
-    public function testListFiles() {
+    public function testListStoredFiles() {
         global $abraia;
-        $data = $abraia->files();
-        $this->assertInternalType('array', $data);
+        $result = $abraia->files();
+        $this->assertInternalType('array', $result);
     }
 
-    public function testUploadFile() {
+    public function testUploadLocalFile() {
         global $abraia;
         $client = $abraia->fromFile('images/lion.jpg');
         $this->assertInstanceOf('Abraia\Abraia', $client);
     }
 
-    public function testDownloadStoredFile() {
+    public function testOptimizeImage() {
         global $abraia;
         $client = $abraia->fromFile('images/tiger.jpg')->toFile('images/optimized.jpg');
         $this->assertInstanceOf('Abraia\Abraia', $client);
     }
 
-    public function testDownloadRemoteFile() {
+    public function testThumbResizeImage() {
         global $abraia;
-        $client = $abraia->fromUrl('https://abraia.me/images/random.jpg')->resize(500, 500, 'thumb')->toFile('images/roptim.jpg');
+        $client = $abraia->fromFile('images/tiger.jpg')->resize(500, 500, 'thumb')->toFile('images/roptim.jpg');
         $this->assertInstanceOf('Abraia\Abraia', $client);
     }
 
-    public function testDownloadResizeFile() {
+    public function testSmartResizeImage() {
         global $abraia;
-        $client = $abraia->fromFile('images/lion.jpg')->resize(500, 500)->toFile('images/resized.jpg');
+        $client = $abraia->fromFile('images/tiger.jpg')->resize(500, 500)->toFile('images/resized.jpg');
         $this->assertInstanceOf('Abraia\Abraia', $client);
     }
 
-    public function testRemoveFile() {
+    public function testRemoveStoredFile() {
         global $abraia;
-        $data = $abraia->delete('0/lion.jpg');
-        $this->assertInternalType('array', $data);
+        $result = $abraia->delete('0/lion.jpg');
+        $this->assertInternalType('array', $result);
     }
 }
