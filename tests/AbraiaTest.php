@@ -37,7 +37,7 @@ final class AbraiaTest extends \PHPUnit_Framework_TestCase {
 
     public function testRemoveStoredFile() {
         global $abraia;
-        $result = $abraia->delete('0/lion.jpg');
+        $result = $abraia->remove('0/lion.jpg');
         $this->assertInternalType('array', $result);
     }
 }

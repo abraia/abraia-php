@@ -34,6 +34,12 @@ class Abraia extends Client {
         return $this;
     }
 
+    function fromStore($path) {
+        $this->path = $path;
+        $this->params = array('q' => 'auto');
+        return $this;
+    }
+
     function toFile($path) {
         $data = $this->transformImage($this->path, $this->params);
         $fp = fopen($path, 'w');
@@ -49,7 +55,7 @@ class Abraia extends Client {
         return $this;
     }
 
-    function delete($path) {
+    function remove($path) {
         return $this->removeFile($path);
     }
 }
