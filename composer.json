@@ -1,11 +1,15 @@
 {
   "name": "abraia/abraia",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Abraia PHP SDK",
   "keywords": [
-      "abraia", "api", "client"
+    "image-optimization",
+    "image-compression",
+    "image-processing",
+    "abraia-api",
+    "php"
   ],
-  "homepage": "https://github.com/abraia/abraia-php",
+  "homepage": "https://github.com/abraia/abraia-php#readme",
   "license": "MIT",
   "authors": [{
     "name": "Jorge Rodriguez Araujo",
@@ -26,5 +30,8 @@
   },
   "scripts": {
     "test": "phpunit tests/test.php"
+  },
+  "archive": {
+    "exclude": [".gitignore", ".travis.yml", "/images", "/tests", "phpunit.xml"]
   }
 }
