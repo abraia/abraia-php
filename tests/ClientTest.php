@@ -5,6 +5,12 @@ require_once(dirname(__DIR__).'/abraia/Client.php');
 $client = new Abraia\Client();
 
 final class ClientTest extends \PHPUnit_Framework_TestCase {
+    public function testLoadUser() {
+        global $client;
+        $result = $client->loadUser();
+        $this->assertInternalType('array', $result);
+    }
+
     public function testListFiles() {
         global $client;
         $result = $client->listFiles();
