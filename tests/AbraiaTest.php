@@ -17,6 +17,12 @@ final class AbraiaTest extends \PHPUnit_Framework_TestCase {
         $this->assertInstanceOf('Abraia\Abraia', $client);
     }
 
+    public function testUploadRemoteFile() {
+        global $abraia;
+        $client = $abraia->fromUrl('https://api.abraia.me/files/demo/birds.jpg');
+        $this->assertInstanceOf('Abraia\Abraia', $client);
+    }
+
     public function testOptimizeImage() {
         global $abraia;
         $client = $abraia->fromFile('images/tiger.jpg')->toFile('images/optimized.jpg');

@@ -17,9 +17,22 @@ final class ClientTest extends \PHPUnit_Framework_TestCase {
         $this->assertInternalType('array', $result);
     }
 
+    public function testUploadRemote() {
+        global $client;
+        $result = $client->uploadRemote('https://api.abraia.me/files/demo/birds.jpg', '0/');
+        $this->assertInternalType('array', $result);
+    }
+
     public function testUploadFile() {
         global $client;
         $result = $client->uploadFile('images/lion.jpg', '0/');
+        $this->assertInternalType('array', $result);
+    }
+
+    public function testMoveFile() {
+        global $client;
+        $result = $client->moveFile('0/birds.jpg', '0/test/birds.jpg');
+        $result = $client->moveFile('0/test/birds.jpg', '0/birds.jpg');
         $this->assertInternalType('array', $result);
     }
 

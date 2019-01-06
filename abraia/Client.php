@@ -31,15 +31,15 @@ class Client {
     }
 
     public function loadUser() {
-      $curl = curl_init(ABRAIA_API_URL . '/users');
-      curl_setopt($curl, CURLOPT_USERPWD, $this->apiKey.':'.$this->apiSecret);
-      curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-      $resp = curl_exec($curl);
-      $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-      curl_close($curl);
-      if ($statusCode != 200)
-          throw new APIError('GET ' . $statusCode);
-      return json_decode($resp, true);
+        $curl = curl_init(ABRAIA_API_URL . '/users');
+        curl_setopt($curl, CURLOPT_USERPWD, $this->apiKey.':'.$this->apiSecret);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        $resp = curl_exec($curl);
+        $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+        if ($statusCode != 200)
+            throw new APIError('GET ' . $statusCode);
+        return json_decode($resp, true);
     }
 
     public function listFiles($path='') {
@@ -52,6 +52,26 @@ class Client {
         if ($statusCode != 200)
             throw new APIError('GET ' . $statusCode);
         return json_decode($resp, true);
+    }
+
+    public function uploadRemote($url, $path) {
+        $curl = curl_init(ABRAIA_API_URL . '/files/' . $path);
+        $data = json_encode(array("url" => $url));
+        curl_setopt($curl, CURLOPT_USERPWD, $this->apiKey.':'.$this->apiSecret);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length ' . strlen($data)
+        ));
+        $resp = curl_exec($curl);
+        $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+        if ($statusCode != 201)
+            throw new APIError('POST ' . $statusCode);
+        $resp = json_decode($resp, true);
+        return $resp['file'];
     }
 
     public function uploadFile($filename, $path='') {
@@ -93,6 +113,26 @@ class Client {
             "name" => $name,
             "source" => $source
         );
+    }
+
+    public function moveFile($old_path, $new_path) {
+        $curl = curl_init(ABRAIA_API_URL . '/files/' . $new_path);
+        $data = json_encode(array("store" => $old_path));
+        curl_setopt($curl, CURLOPT_USERPWD, $this->apiKey.':'.$this->apiSecret);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length ' . strlen($data)
+        ));
+        $resp = curl_exec($curl);
+        $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+        if ($statusCode != 201)
+            throw new APIError('POST ' . $statusCode);
+        $resp = json_decode($resp, true);
+        return $resp['file'];
     }
 
     public function downloadFile($path) {

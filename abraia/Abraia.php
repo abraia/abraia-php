@@ -33,11 +33,9 @@ class Abraia extends Client {
 
     function fromUrl($url) {
         if (!$this->userid) $this->userid = $this->check();
-        $this->path = '';
-        $this->params = array(
-            'url' => $url,
-            'q' => 'auto',
-        );
+        $resp = $this->uploadRemote($url, $this->userid . '/');
+        $this->path = $resp['source'];
+        $this->params = array('q' => 'auto');
         return $this;
     }
 
