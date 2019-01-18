@@ -141,7 +141,7 @@ class Client {
         curl_setopt($curl, CURLOPT_USERPWD, $this->apiKey.':'.$this->apiSecret);
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_BINARYTRANSFER,1);
+        curl_setopt($curl, CURLOPT_BINARYTRANSFER, 1);
         $resp = curl_exec($curl);
         $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close ($curl);
@@ -165,12 +165,14 @@ class Client {
 
     public function transformImage($path, $params=array()) {
         $url = ABRAIA_API_URL . '/images/' . $path;
-        $url = $url.'?'.http_build_query($params);
+        if ($params) $url = $url.'?'.http_build_query($params);
+        print_r($url);
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_HEADER, 0);
         curl_setopt($curl, CURLOPT_USERPWD, $this->apiKey.':'.$this->apiSecret);
+        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_BINARYTRANSFER,1);
+        curl_setopt($curl, CURLOPT_BINARYTRANSFER, 1);
         $resp = curl_exec($curl);
         $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close ($curl);

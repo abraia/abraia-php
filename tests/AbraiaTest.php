@@ -41,9 +41,14 @@ final class AbraiaTest extends \PHPUnit_Framework_TestCase {
         $this->assertInstanceOf('Abraia\Abraia', $client);
     }
 
+    public function testRestoreStoredFile() {
+        global $abraia;
+        $client = $abraia->fromStore('lion.jpg')->toFile('images/lion.bak.jpg');
+        $this->assertInstanceOf('Abraia\Abraia', $client);
+    }
     public function testRemoveStoredFile() {
         global $abraia;
-        $result = $abraia->remove('0/lion.jpg');
+        $result = $abraia->fromStore('lion.jpg')->remove();
         $this->assertInternalType('array', $result);
     }
 }
