@@ -42,7 +42,7 @@ class Abraia extends Client {
     function fromStore($path) {
         if (!$this->userid) $this->userid = $this->check();
         $this->path = $path;
-        $this->params = array('q' => 'auto');
+        $this->params = array();
         return $this;
     }
 
