@@ -28,15 +28,6 @@ class Client {
         $this->apiSecret = $apiSecret;
     }
 
-    public function check() {
-      try {
-        return $this->listFiles()['folders'][0]['name'];
-      }
-      catch (APIError $e) {
-        return NULL;
-      }
-    }
-
     public function loadUser() {
         $curl = curl_init(ABRAIA_API_URL . '/users');
         curl_setopt($curl, CURLOPT_USERPWD, $this->apiKey.':'.$this->apiSecret);
