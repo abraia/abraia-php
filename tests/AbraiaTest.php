@@ -7,7 +7,7 @@ $abraia = new Abraia\Abraia();
 final class AbraiaTest extends \PHPUnit_Framework_TestCase {
     public function testListStoredFiles() {
         global $abraia;
-        $result = $abraia->list();
+        $result = $abraia->files();
         $this->assertInternalType('array', $result);
     }
 

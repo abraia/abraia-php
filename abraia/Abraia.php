@@ -29,7 +29,7 @@ class Abraia extends Client {
         }
     }
 
-    function list($path='') {
+    function files($path='') {
         return $this->listFiles($this->userid . '/' . $path);
     }
 
