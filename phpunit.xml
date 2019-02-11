@@ -9,4 +9,9 @@
       <directory>tests</directory>
     </testsuite>
   </testsuites>
+  <filter>
+    <whitelist addUncoveredFilesFromWhitelist="true">
+      <directory suffix=".php">abraia</directory>
+    </whitelist>
+  </filter>
 </phpunit>
