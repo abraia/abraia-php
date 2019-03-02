@@ -9,8 +9,9 @@ class Abraia extends Client {
     protected $params;
     protected $userid;
 
-    function __construct() {
+    function __construct($folder='') {
         parent::__construct();
+        $this->folder = $folder;
         $this->userid = $this->getUserId();
     }
 
@@ -34,14 +35,14 @@ class Abraia extends Client {
     }
 
     function fromFile($path) {
-        $resp = $this->uploadFile($path, $this->userid . '/');
+        $resp = $this->uploadFile($path, $this->userid . '/' . $this->folder);
         $this->path = $resp['source'];
         $this->params = array('q' => 'auto');
         return $this;
     }
 
     function fromUrl($url) {
-        $resp = $this->uploadRemote($url, $this->userid . '/');
+        $resp = $this->uploadRemote($url, $this->userid . '/' . $this->folder);
         $this->path = $resp['source'];
         $this->params = array('q' => 'auto');
         return $this;
