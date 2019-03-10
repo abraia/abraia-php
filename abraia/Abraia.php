@@ -25,7 +25,7 @@ class Abraia extends Client {
         try {
             return $this->loadUser()['user']['id'];
         }
-        catch (APIError $e) {
+        catch (\Exception $e) {
             return NULL;
         }
     }
