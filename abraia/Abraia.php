@@ -15,19 +15,23 @@ class Abraia extends Client {
         $this->userid = $this->getUserId();
     }
 
+    private function getUserId() {
+        try {
+            return $this->user()['id'];
+        } catch (\Exception $e) {
+            return NULL;
+        }
+    }
+
     function setKey($key) {
         list($apiKey, $apiSecret) = explode(':', base64_decode($key));
         $this->setApiKeys($apiKey, $apiSecret);
         $this->userid = $this->getUserId();
     }
 
-    private function getUserId() {
-        try {
-            return $this->loadUser()['user']['id'];
-        }
-        catch (\Exception $e) {
-            return NULL;
-        }
+
+    function user() {
+      return $this->loadUser()['user'];
     }
 
     function files($path='') {

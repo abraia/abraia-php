@@ -5,6 +5,12 @@ require_once(dirname(__DIR__).'/abraia/Abraia.php');
 $abraia = new Abraia\Abraia();
 
 final class AbraiaTest extends \PHPUnit_Framework_TestCase {
+    public function testLoadUserData() {
+        global $abraia;
+        $result = $abraia->user();
+        $this->assertInternalType('array', $result);
+    }
+
     public function testListStoredFiles() {
         global $abraia;
         $result = $abraia->files();
