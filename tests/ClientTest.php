@@ -13,13 +13,13 @@ final class ClientTest extends \PHPUnit_Framework_TestCase {
 
     public function testListFiles() {
         global $client;
-        $result = $client->listFiles();
+        $result = $client->listFiles('0/');
         $this->assertInternalType('array', $result);
     }
 
     public function testUploadRemote() {
         global $client;
-        $result = $client->uploadRemote('https://api.abraia.me/files/demo/birds.jpg', '0/');
+        $result = $client->uploadRemote('https://api.abraia.me/files/demo/lion.jpg', '0/');
         $this->assertInternalType('array', $result);
     }
 
@@ -31,8 +31,8 @@ final class ClientTest extends \PHPUnit_Framework_TestCase {
 
     public function testMoveFile() {
         global $client;
-        $result = $client->moveFile('0/birds.jpg', '0/test/birds.jpg');
-        $result = $client->moveFile('0/test/birds.jpg', '0/birds.jpg');
+        $result = $client->moveFile('0/lion.jpg', '0/test/lion.jpg');
+        $result = $client->moveFile('0/test/lion.jpg', '0/lion.jpg');
         $this->assertInternalType('array', $result);
     }
 
