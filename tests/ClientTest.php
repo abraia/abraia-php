@@ -2,8 +2,12 @@
 
 require_once(dirname(__DIR__).'/abraia/Client.php');
 
-$dotenv = Dotenv\Dotenv::createMutable(dirname(__DIR__));
-$dotenv->load();
+try {
+    $dotenv = Dotenv\Dotenv::createMutable(dirname(__DIR__));
+    $dotenv->load();
+} catch (Exception $e) {
+    echo 'Dotenv exception: ',  $e->getMessage(), '\n';
+}
 
 $client = new Abraia\Client();
 
