@@ -2,6 +2,9 @@
 
 require_once(dirname(__DIR__).'/abraia/Client.php');
 
+$dotenv = Dotenv\Dotenv::createMutable(dirname(__DIR__));
+$dotenv->load();
+
 $client = new Abraia\Client();
 
 final class ClientTest extends \PHPUnit_Framework_TestCase {

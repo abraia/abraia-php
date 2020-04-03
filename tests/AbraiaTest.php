@@ -2,6 +2,9 @@
 
 require_once(dirname(__DIR__).'/abraia/Abraia.php');
 
+$dotenv = Dotenv\Dotenv::createMutable(dirname(__DIR__));
+$dotenv->load();
+
 $abraia = new Abraia\Abraia();
 
 final class AbraiaTest extends \PHPUnit_Framework_TestCase {
