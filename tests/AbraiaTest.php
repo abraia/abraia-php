@@ -12,6 +12,13 @@ try {
 $abraia = new Abraia\Abraia();
 
 final class AbraiaTest extends \PHPUnit_Framework_TestCase {
+    public function testSetKeyUserId()
+    {
+        global $abraia;
+        $result = $abraia->setKey('');
+        $this->assertInternalType('null', $result);
+    }
+
     public function testLoadUserData() {
         global $abraia;
         $result = $abraia->user();
